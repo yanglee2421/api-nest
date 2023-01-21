@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { JokeModule } from './joke/joke.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { resolve } from 'node:path';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { JokeModule } from './joke/joke.module';
+import { PwdModule } from './pwd/pwd.module';
 @Module({
   imports: [
     JokeModule,
+    PwdModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: resolve(__dirname, '../db.sqlite3'),
