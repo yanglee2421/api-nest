@@ -15,10 +15,11 @@ async function bootstrap() {
     const origin = whiteList.includes(req.headers.origin || '');
     callback(null, { origin });
   });
-  // 请求体校验
+  // body校验
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   // 部署静态资源
   app.useStaticAssets(resolve(__dirname, '../view'));
+  app.useStaticAssets(resolve(__dirname, '../public'));
   await app.listen(3000);
 }
 bootstrap();
