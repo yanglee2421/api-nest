@@ -1,6 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Put,
+} from '@nestjs/common';
 import { PwdService } from './pwd.service';
-import { SavePwd, DeletePwd } from './dto';
+import { Cbody, Dbody, Ubody } from './dto';
 @Controller('pwd')
 export class PwdController {
   constructor(private readonly PwdService: PwdService) {}
@@ -12,12 +20,16 @@ export class PwdController {
   findOne(@Param('id') id: string) {
     return this.PwdService.findOne(id);
   }
-  @Post()
-  save(@Body() SavePwd: SavePwd) {
-    return this.PwdService.save(SavePwd);
+  @Put()
+  create(@Body() Cbody: Cbody) {
+    return this.PwdService.put(Cbody);
+  }
+  @Patch()
+  patch(@Body() Ubody: Ubody) {
+    return this.PwdService.patch(Ubody);
   }
   @Delete()
-  remove(@Body() DeletePwd: DeletePwd) {
-    return this.PwdService.remove(DeletePwd);
+  remove(@Body() Dbody: Dbody) {
+    return this.PwdService.remove(Dbody);
   }
 }

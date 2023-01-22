@@ -2,13 +2,18 @@ import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Pwd } from '@/entities';
-import { SavePwd, DeletePwd } from './dto';
+import { Cbody, Dbody, Ubody } from './dto';
 @Injectable()
 export class PwdService {
   constructor(@InjectRepository(Pwd) private readonly db: Repository<Pwd>) {}
   async find() {
     try {
-      return this.db.find();
+      return this.db.find({
+        where: [],
+        skip: 0,
+        take: 20,
+        order: { site: 'asc', user: 'asc', pwd: 'asc' },
+      });
     } catch (err) {
       throw new NotFoundException(err);
     }
@@ -20,16 +25,25 @@ export class PwdService {
       throw new NotFoundException(err);
     }
   }
-  async save(SavePwd: SavePwd) {
-    const { id } = SavePwd;
-    const target = id
-      ? await this.db.preload(SavePwd)
-      : this.db.create(SavePwd);
-    return this.db.save(target);
-  }
-  async remove(DeletePwd: DeletePwd) {
+  async put(Cbody: Cbody) {
     try {
-      const { id } = DeletePwd;
+      const target = this.db.create(Cbody);
+      return this.db.save(target);
+    } catch (err) {
+      throw httErr(err);
+    }
+  }
+  async patch(Ubody: Ubody) {
+    try {
+      const target = await this.db.preload(Ubody);
+      return this.db.save(target);
+    } catch (err) {
+      throw httErr(err);
+    }
+  }
+  async remove(Dbody: Dbody) {
+    try {
+      const { id } = Dbody;
       const target = await this.db.findOneByOrFail({ id });
       return this.db.remove(target);
     } catch (err) {
