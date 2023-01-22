@@ -5,7 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { resolve } from 'node:path';
 const whiteList = [
   'http://127.0.0.1:3000',
-  'http://localhost:3000',
+  'http://localhost:5173',
   'http://192.168.1.4:3000',
 ];
 async function bootstrap() {
@@ -18,8 +18,12 @@ async function bootstrap() {
   // body校验
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   // 部署静态资源
-  app.useStaticAssets(resolve(__dirname, '../view'));
-  app.useStaticAssets(resolve(__dirname, '../public'));
+  app.useStaticAssets(resolve(__dirname, '../../view'), {
+    prefix: '/vite-react',
+  });
+  app.useStaticAssets(resolve(__dirname, '../../public'), {
+    prefix: '/public',
+  });
   await app.listen(3000);
 }
 bootstrap();
