@@ -5,16 +5,17 @@ import {
   Get,
   Param,
   Patch,
+  Post,
   Put,
 } from '@nestjs/common';
 import { PwdService } from './pwd.service';
-import { Cbody, Dbody, Ubody } from './dto';
+import { Cbody, Dbody, Rbody, Ubody } from './dto';
 @Controller('pwd')
 export class PwdController {
   constructor(private readonly PwdService: PwdService) {}
-  @Get()
-  find() {
-    return this.PwdService.find();
+  @Post()
+  find(@Body() Rbody: Rbody) {
+    return this.PwdService.find(Rbody);
   }
   @Get(':id')
   findOne(@Param('id') id: string) {

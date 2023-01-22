@@ -1,4 +1,5 @@
 import {
+  IsInt,
   IsNotEmpty,
   IsString,
   IsUUID,
@@ -10,27 +11,34 @@ class Content {
   @IsNotEmpty()
   @IsString()
   @Length(1, 100)
-  site: string;
+  readonly site: string;
   @IsNotEmpty()
   @IsString()
   @Length(1, 100)
-  user: string;
+  readonly user: string;
   @IsNotEmpty()
   @IsString()
   @Length(1, 100)
-  pwd: string;
+  readonly pwd: string;
 }
 export class Cbody extends Content {
   @ValidateIf((body) => Boolean(body.id))
   @IsUUID()
-  id: string;
+  readonly id: string;
 }
-export const Rbody = PartialType(Content);
+export class Rbody extends PartialType(Content) {
+  @ValidateIf((body) => Boolean(body.page))
+  @IsInt()
+  readonly page: number;
+  @ValidateIf((body) => Boolean(body.size))
+  @IsInt()
+  readonly size: number;
+}
 export class Ubody extends Rbody {
   @IsUUID()
-  id: string;
+  readonly id: string;
 }
 export class Dbody {
   @IsUUID()
-  id: string;
+  readonly id: string;
 }

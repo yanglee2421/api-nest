@@ -12,7 +12,7 @@ import { BingModule } from './bing/bing.module';
     PwdModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: resolve(__dirname, '../../db.sqlite3'),
+      database: resolve(__dirname, '../db.sqlite3'),
       synchronize: true,
       autoLoadEntities: true,
     }),

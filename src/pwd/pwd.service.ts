@@ -1,19 +1,28 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Like, Repository } from 'typeorm';
 import { Pwd } from '@/entities';
-import { Cbody, Dbody, Ubody } from './dto';
+import { Cbody, Dbody, Rbody, Ubody } from './dto';
 @Injectable()
 export class PwdService {
   constructor(@InjectRepository(Pwd) private readonly db: Repository<Pwd>) {}
-  async find() {
+  async find(Rbody: Rbody) {
     try {
-      return this.db.find({
-        where: [],
-        skip: 0,
-        take: 20,
-        order: { site: 'asc', user: 'asc', pwd: 'asc' },
+      const { page = 1, size = 20, ...restBody } = Rbody;
+      const item = {};
+      Object.entries(restBody).forEach(([key, value]) => {
+        item[key] = Like(`%${value}%`);
       });
+      const isWhere = JSON.stringify(item) !== '{}';
+      const findOption: FindManyOptions<Pwd> = {
+        where: isWhere ? item : undefined,
+        skip: (page - 1) * size,
+        take: size,
+        order: { site: 'asc' },
+      };
+      const total = await this.db.count(findOption);
+      const rows = await this.db.find(findOption);
+      return { total, rows };
     } catch (err) {
       throw new NotFoundException(err);
     }

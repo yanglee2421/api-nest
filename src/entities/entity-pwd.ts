@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-@Entity()
+@Entity('Table_Pwd')
 export class Pwd {
   @PrimaryGeneratedColumn('uuid')
   id: string;
