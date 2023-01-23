@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { JokeService } from './joke.service';
-import { CreateJoke, DeleteJoke } from './dto';
+import { Cbody, Dbody } from './dto';
 @Controller('joke')
 export class JokeController {
   constructor(private readonly JokeService: JokeService) {}
@@ -16,12 +16,13 @@ export class JokeController {
   findOne(@Param('id') id: string) {
     return this.JokeService.findOne(id);
   }
-  @Post()
-  save(@Body() body: CreateJoke) {
+  @Put()
+  save(@Body() body: Cbody) {
     return this.JokeService.save(body);
   }
   @Delete()
-  delete(@Body() body: DeleteJoke) {
-    return this.JokeService.delete(body);
+  delete(@Body() body: Dbody) {
+    const { id } = body;
+    return this.JokeService.remove(id);
   }
 }
