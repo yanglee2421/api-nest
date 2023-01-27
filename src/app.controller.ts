@@ -18,7 +18,7 @@ export class AppController {
   getHello(@Response() res: resType) {
     return res.sendFile(resolve(__dirname, '../../view/index.html'));
   } */
-  @Get('/vite-react/:path')
+  @Get('/vite-react/*')
   webReact(@Response() res: resType) {
     res.sendFile(resolve(__dirname, '../view/react-app/index.html'));
   }
