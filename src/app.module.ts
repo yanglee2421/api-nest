@@ -3,24 +3,22 @@ import { resolve } from 'node:path';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JokeModule } from './joke/joke.module';
-import { PwdModule } from './pwd/pwd.module';
-import { BingModule } from './bing/bing.module';
 import { CoffeeModule } from './coffee/coffee.module';
+import { QqlykmModule } from './qqlykm/qqlykm.module';
+
 @Module({
   imports: [
-    JokeModule,
-    PwdModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: resolve(__dirname, '../db.sqlite3'),
       synchronize: true,
+      // nestjs提供
       autoLoadEntities: true,
     }),
-    BingModule,
     CoffeeModule,
+    QqlykmModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
+  controllers: [AppController],
 })
 export class AppModule {}

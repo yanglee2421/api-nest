@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PwdController } from './pwd.controller';
+import { QqlykmController } from './qqlykm.controller';
 
-describe('PwdController', () => {
-  let controller: PwdController;
+describe('QqlykmController', () => {
+  let controller: QqlykmController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PwdController],
+      controllers: [QqlykmController],
     }).compile();
 
-    controller = module.get<PwdController>(PwdController);
+    controller = module.get<QqlykmController>(QqlykmController);
   });
 
   it('should be defined', () => {
