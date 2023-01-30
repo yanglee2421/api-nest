@@ -6,6 +6,7 @@ import { Cbody, Dbody, Rbody, Ubody } from './dto';
 @Injectable()
 export class PwdService {
   constructor(@InjectRepository(Pwd) private readonly db: Repository<Pwd>) {}
+
   async find(Rbody: Rbody) {
     try {
       const { page = 1, size = 20, ...restBody } = Rbody;
@@ -27,6 +28,7 @@ export class PwdService {
       throw new NotFoundException(err);
     }
   }
+
   async findOne(id: string) {
     try {
       return this.db.findOneByOrFail({ id });
@@ -34,32 +36,36 @@ export class PwdService {
       throw new NotFoundException(err);
     }
   }
+
   async put(Cbody: Cbody) {
     try {
       const target = this.db.create(Cbody);
-      return this.db.save(target);
+      return await this.db.save(target);
     } catch (err) {
       throw httErr(err);
     }
   }
+
   async patch(Ubody: Ubody) {
     try {
       const target = await this.db.preload(Ubody);
-      return this.db.save(target);
+      return await this.db.save(target);
     } catch (err) {
       throw httErr(err);
     }
   }
+
   async remove(Dbody: Dbody) {
     try {
       const { id } = Dbody;
       const target = await this.db.findOneByOrFail({ id });
-      return this.db.remove(target);
+      return await this.db.remove(target);
     } catch (err) {
       throw httErr(err);
     }
   }
 }
+
 function httErr(err: any) {
   const mes = typeof err === 'string' ? err : err.message;
   return new HttpException(mes, 500);

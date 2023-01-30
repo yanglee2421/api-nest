@@ -18,7 +18,16 @@ async function bootstrap() {
     callback(null, { origin });
   });
   // body校验
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: false,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
   // 部署静态资源
   app.useStaticAssets(resolve(__dirname, '../view/vue-app'), {
     prefix: '/vue/',

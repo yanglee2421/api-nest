@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JokeModule } from './joke/joke.module';
 import { PwdModule } from './pwd/pwd.module';
 import { BingModule } from './bing/bing.module';
+import { CoffeeModule } from './coffee/coffee.module';
 @Module({
   imports: [
     JokeModule,
@@ -17,6 +18,7 @@ import { BingModule } from './bing/bing.module';
       autoLoadEntities: true,
     }),
     BingModule,
+    CoffeeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
