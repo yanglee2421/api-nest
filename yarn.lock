@@ -2487,6 +2487,13 @@ expect@^29.4.0:
     jest-message-util "^29.4.0"
     jest-util "^29.4.0"
 
+express-static-gzip@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.npmmirror.com/express-static-gzip/-/express-static-gzip-2.1.7.tgz#5904824a07950ba741ec3a23a21839dd04c63506"
+  integrity sha512-QOCZUC+lhPPCjIJKpQGu1Oa61Axg9Mq09Qvit8Of7kzpMuwDeMSqjjQteQS3OVw/GkENBoSBheuQDWPlngImvw==
+  dependencies:
+    serve-static "^1.14.1"
+
 express@4.18.2:
   version "4.18.2"
   resolved "https://registry.npmmirror.com/express/-/express-4.18.2.tgz#3fabe08296e930c796c19e3c516979386ba9fd59"
@@ -4681,7 +4688,7 @@ serialize-javascript@^6.0.0:
   dependencies:
     randombytes "^2.1.0"
 
-serve-static@1.15.0:
+serve-static@1.15.0, serve-static@^1.14.1:
   version "1.15.0"
   resolved "https://registry.npmmirror.com/serve-static/-/serve-static-1.15.0.tgz#faaef08cffe0a1a62f60cad0c4e513cff0ac9540"
   integrity sha512-XGuRDNjXUijsUL0vl6nSD7cwURuzEgglbOaFuZM9g3kwDXOWVTck0jLzjPzGD+TazWbboZYu52/9/XPdUgne9g==

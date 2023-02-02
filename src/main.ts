@@ -4,12 +4,13 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
+import * as gzip from 'express-static-gzip';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     httpsOptions: {
-      key: readFileSync(resolve(__dirname, '../https/localhost+1-key.pem')),
-      cert: readFileSync(resolve(__dirname, '../https/localhost+1.pem')),
+      key: readFileSync(toPath('../https/localhost+1-key.pem')),
+      cert: readFileSync(toPath('../https/localhost+1.pem')),
     },
   });
   // cors跨域
@@ -24,24 +25,24 @@ async function bootstrap() {
   // body校验
   app.useGlobalPipes(
     new ValidationPipe({
+      forbidNonWhitelisted: false,
       whitelist: true,
       transform: true,
-      forbidNonWhitelisted: false,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
   // 部署静态资源
-  app.useStaticAssets(resolve(__dirname, '../view/vue-app'), {
-    prefix: '/vue/',
+  app.useStaticAssets(toPath('../view/vue-app'), {
+    prefix: '/vite-vue/',
   });
-  app.useStaticAssets(resolve(__dirname, '../view/react-app'), {
-    prefix: '/vite-react/',
-  });
-  app.useStaticAssets(resolve(__dirname, '../public'), {
+  app.useStaticAssets(toPath('../public'), {
     prefix: '/public',
   });
+  app.use('/vite-react', gzip(toPath('../view/react-app'), {}));
   await app.listen(3000);
 }
 bootstrap();
+
+function toPath(path: string) {
+  return resolve(__dirname, path);
+}
