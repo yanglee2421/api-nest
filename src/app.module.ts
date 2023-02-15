@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeModule } from './coffee/coffee.module';
 import { QqlykmModule } from './qqlykm/qqlykm.module';
+import { PasModule } from './pas/pas.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { QqlykmModule } from './qqlykm/qqlykm.module';
     }),
     CoffeeModule,
     QqlykmModule,
+    PasModule,
   ],
   providers: [AppService],
   controllers: [AppController],

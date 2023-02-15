@@ -57,7 +57,6 @@ export class CoffeeService {
       event.name = 'xxx';
       event.type = 'xxxT';
       event.payload = JSON.stringify({ id: coffee.id });
-
       await queryRunner.manager.save(coffee);
       await queryRunner.manager.save(event);
 

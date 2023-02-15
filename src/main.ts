@@ -8,11 +8,12 @@ import * as gzip from 'express-static-gzip';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    httpsOptions: {
-      key: readFileSync(toPath('../https/localhost+1-key.pem')),
+    /*  httpsOptions: {
+       key: readFileSync(toPath('../https/localhost+1-key.pem')),
       cert: readFileSync(toPath('../https/localhost+1.pem')),
-    },
+    }, */
   });
+
   // cors跨域
   app.enableCors({
     origin: [
@@ -22,6 +23,7 @@ async function bootstrap() {
       'http://192.168.1.4:3000',
     ],
   });
+
   // body校验
   app.useGlobalPipes(
     new ValidationPipe({
@@ -31,6 +33,7 @@ async function bootstrap() {
       transformOptions: { enableImplicitConversion: true },
     }),
   );
+
   // 部署静态资源
   app.useStaticAssets(toPath('../view/vue-app'), {
     prefix: '/vite-vue/',
